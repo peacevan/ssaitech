@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSAIT — Salvador Social AI Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1e3d;
+    --navy-mid: #0f2a55;
+    --navy-light: #1a3d7a;
+    --blue: #1e5ca8;
+    --blue-bright: #2271d4;
+    --blue-soft: #e8f0fb;
+    --blue-softer: #f0f5fd;
+    --white: #ffffff;
+    --off-white: #f7f9fc;
+    --text-dark: #0a1628;
+    --text-mid: #3d5a80;
+    --text-muted: #7a95b8;
+    --border: #dce6f0;
+    --border-dark: #b8ccdf;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text-dark); overflow-x: hidden; }
+  h1, h2, h3, h4, .logo-text { font-family: 'Syne', sans-serif; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6vw; height: 68px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; color: #fff;
+  }
+  .logo-text { font-size: 17px; font-weight: 700; color: var(--navy); letter-spacing: -0.3px; }
+  .logo-text span { color: var(--blue-bright); }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a { font-size: 14px; color: var(--text-mid); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-cta {
+    padding: 9px 22px; border-radius: 6px;
+    background: var(--navy); color: #fff;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: background .2s, transform .15s;
+  }
+  .nav-cta:hover { background: var(--blue-bright); transform: translateY(-1px); }
+
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 120px 6vw 80px;
+    background: var(--white); position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; top: 55%;
+    background: var(--blue-softer);
+    clip-path: ellipse(70% 60% at 50% 100%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px; border-radius: 99px;
+    border: 1px solid var(--border-dark);
+    background: var(--blue-softer);
+    font-size: 12px; font-weight: 500; color: var(--blue);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 28px; animation: fadeUp .6s ease both;
+  }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue-bright); }
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 72px); font-weight: 800;
+    line-height: 1.08; letter-spacing: -2px;
+    max-width: 860px; margin-bottom: 24px; color: var(--navy);
+    animation: fadeUp .7s .1s ease both;
+  }
+  .hero h1 em { font-style: normal; color: var(--blue-bright); }
+  .hero p {
+    font-size: clamp(16px, 2vw, 19px); font-weight: 300;
+    color: var(--text-mid); max-width: 560px;
+    line-height: 1.75; margin-bottom: 44px;
+    animation: fadeUp .7s .2s ease both;
+  }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; animation: fadeUp .7s .3s ease both; }
+  .btn-primary {
+    padding: 14px 32px; border-radius: 8px;
+    background: var(--navy); color: #fff;
+    font-size: 15px; font-weight: 500; text-decoration: none;
+    transition: background .2s, transform .15s, box-shadow .2s;
+  }
+  .btn-primary:hover { background: var(--blue-bright); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,113,212,0.25); }
+  .btn-outline {
+    padding: 14px 32px; border-radius: 8px;
+    border: 1.5px solid var(--border-dark);
+    background: transparent; color: var(--text-mid);
+    font-size: 15px; font-weight: 400; text-decoration: none;
+    transition: border-color .2s, color .2s, transform .15s;
+  }
+  .btn-outline:hover { border-color: var(--blue); color: var(--navy); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex; gap: 56px; margin-top: 72px;
+    flex-wrap: wrap; justify-content: center;
+    position: relative; z-index: 1;
+    animation: fadeUp .7s .4s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--navy); line-height: 1; }
+  .stat-num span { color: var(--blue-bright); }
+  .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  section { padding: 100px 6vw; }
+  .section-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-bright); margin-bottom: 16px; }
+  .section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 800; letter-spacing: -1px; line-height: 1.15; color: var(--navy); margin-bottom: 16px; }
+  .section-title em { font-style: normal; color: var(--blue-bright); }
+  .section-sub { font-size: 17px; font-weight: 300; color: var(--text-mid); line-height: 1.7; max-width: 560px; margin-bottom: 56px; }
+
+  .frentes { background: var(--navy); }
+  .frentes-inner { max-width: 1200px; margin: 0 auto; }
+  .frentes-header { text-align: center; margin-bottom: 64px; }
+  .frentes-header .section-tag { color: rgba(255,255,255,0.45); }
+  .frentes-header .section-title { color: #fff; }
+  .frentes-header .section-title em { color: #6ab4ff; }
+  .frentes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .frente-card {
+    padding: 48px 40px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    transition: background .3s, transform .2s;
+    position: relative; overflow: hidden;
+  }
+  .frente-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-4px); }
+  .frente-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue-bright), #6ab4ff);
+    transform: scaleX(0); transform-origin: left; transition: transform .4s ease;
+  }
+  .frente-card:hover::before { transform: scaleX(1); }
+  .frente-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 24px;
+  }
+  .frente-card h3 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+  .frente-card p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+
+  .projetos { background: var(--off-white); }
+  .projetos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .projeto-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+  .projeto-card:hover { transform: translateY(-4px); border-color: var(--blue); box-shadow: 0 16px 48px rgba(34,113,212,0.12); }
+  .projeto-status { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 99px; margin-bottom: 20px; }
+  .status-active { background: var(--blue-soft); color: var(--blue); }
+  .status-active::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--blue-bright); }
+  .status-planned { background: var(--off-white); color: var(--text-muted); border: 1px solid var(--border); }
+  .status-planned::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--text-muted); }
+  .projeto-card h3 { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .projeto-card p { font-size: 14px; color: var(--text-mid); line-height: 1.7; margin-bottom: 20px; }
+  .projeto-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 11px; padding: 3px 10px; border-radius: 99px; background: var(--blue-softer); color: var(--blue); border: 1px solid var(--blue-soft); }
+
+  .servicos { background: var(--white); }
+  .servicos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .servico-card {
+    background: var(--off-white); border: 1px solid var(--border);
+    border-radius: 16px; padding: 36px;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+  }
+  .servico-card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(34,113,212,0.1); }
+  .servico-num { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: var(--blue-soft); margin-bottom: 16px; line-height: 1; }
+  .servico-card h3 { font-size: 19px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .servico-card p { font-size: 14px; color: var(--text-mid); line-height: 1.7; }
+
+  .stack-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
+  .stack-item { padding: 8px 18px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--white); font-size: 13px; font-weight: 500; color: var(--text-mid); transition: border-color .2s, color .2s, background .2s; }
+  .stack-item:hover { border-color: var(--blue); color: var(--navy); background: var(--blue-softer); }
+  .stack-item.highlight { border-color: var(--blue); color: var(--blue); background: var(--blue-softer); }
+
+  .sobre { background: var(--off-white); }
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .sobre-content p { font-size: 16px; color: var(--text-mid); line-height: 1.8; margin-bottom: 16px; }
+  .sobre-highlight { font-size: 20px; font-weight: 500; color: var(--navy); line-height: 1.6; margin-bottom: 32px; border-left: 3px solid var(--blue-bright); padding-left: 20px; font-style: italic; }
+  .sobre-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .metric-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: border-color .2s, box-shadow .2s; }
+  .metric-card:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(34,113,212,0.1); }
+  .metric-num { font-family: 'Syne', sans-serif; font-size: 38px; font-weight: 800; color: var(--navy); line-height: 1; }
+  .metric-num span { color: var(--blue-bright); }
+  .metric-label { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+
+  .cta-section { background: var(--navy); text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(34,113,212,0.3) 0%, transparent 70%); pointer-events: none; }
+  .cta-section h2 { font-size: clamp(26px, 4vw, 46px); font-weight: 800; color: #fff; margin-bottom: 16px; }
+  .cta-section p { font-size: 18px; color: rgba(255,255,255,0.6); margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .cta-section .btn-primary { background: var(--blue-bright); }
+  .cta-section .btn-primary:hover { background: #6ab4ff; color: var(--navy); }
+  .cta-section .btn-outline { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+  .cta-section .btn-outline:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+
+  footer { background: var(--white); border-top: 1px solid var(--border); padding: 56px 6vw 32px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-top: 16px; max-width: 300px; }
+  .footer-col h4 { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 14px; color: var(--text-muted); text-decoration: none; margin-bottom: 10px; transition: color .2s; }
+  .footer-col a:hover { color: var(--navy); }
+  .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-muted); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    .frentes-grid, .projetos-grid, .servicos-grid, .sobre-grid, .footer-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">SS</div>
+    <span class="logo-text">SS<span>AIT</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#frentes">O que fazemos</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#sobre">Sobre</a>
+  </div>
+  <a href="#contato" class="nav-cta">Fale conosco</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">Salvador Social AI Tech</div>
+  <h1>Tecnologia com propósito.<br><em>Impacto real</em> em Salvador.</h1>
+  <p>Usamos inteligência artificial e engenharia de software para resolver problemas reais — de comunidades de baixa renda e pequenas empresas que precisam modernizar.</p>
+  <div class="hero-ctas">
+    <a href="#projetos" class="btn-primary">Ver projetos sociais</a>
+    <a href="#servicos" class="btn-outline">Consultoria para PMEs</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">14<span>+</span></div><div class="stat-label">anos de experiência</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">projetos de impacto social</div></div>
+    <div class="stat"><div class="stat-num">20<span>→80%</span></div><div class="stat-label">cobertura de testes na Caixa</div></div>
+    <div class="stat"><div class="stat-num">SSA</div><div class="stat-label">baseado em Salvador, BA</div></div>
+  </div>
+</section>
+
+<section class="frentes" id="frentes">
+  <div class="frentes-inner">
+    <div class="frentes-header reveal">
+      <div class="section-tag">O que fazemos</div>
+      <h2 class="section-title">Duas frentes, <em>um propósito</em></h2>
+    </div>
+    <div class="frentes-grid">
+      <div class="frente-card reveal">
+        <div class="frente-icon">🌱</div>
+        <h3>Projetos de Impacto Social</h3>
+        <p>Aplicações que beneficiam comunidades de baixa renda, famílias em vulnerabilidade e causas que o mercado ignora. Construídos com IA, open source e documentados do início ao fim.</p>
+      </div>
+      <div class="frente-card reveal">
+        <div class="frente-icon">⚙️</div>
+        <h3>Consultoria para Pequenas Empresas</h3>
+        <p>Modernização de sistemas legados e introdução de IA para PMEs sem time técnico interno. Qualidade de sistemas financeiros críticos, no orçamento de quem está crescendo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="projetos" id="projetos">
+  <div class="section-tag reveal">Projetos open source</div>
+  <h2 class="section-title reveal">Impacto social com <em>tecnologia real</em></h2>
+  <p class="section-sub reveal">Cada projeto resolve um problema genuíno de pessoas reais em Salvador. Código aberto, documentado e evoluindo em público.</p>
+  <div class="projetos-grid">
+    <div class="projeto-card reveal">
+      <span class="projeto-status status-active">Em desenvolvimento</span>
+      <h3>SmartList</h3>
+      <p>Lista de compras inteligente com voz, OCR e IA. Vai virar um Waze de preços para famílias de baixa renda — quanto mais pessoas registram preços, mais preciso fica o ranking por bairro.</p>
+      <div class="projeto-tags"><span class="tag">React</span><span class="tag">LLM</span><span class="tag">OCR</span><span class="tag">Java 21</span></div>
+    </div>
+    <div class="projeto-card reveal">
+      <span class="projeto-status status-planned">Planejado</span>
+      <h3>HelpTea</h3>
+      <p>Registro de evolução para crianças autistas com botão SOS e relatórios automáticos para terapeutas. Construído por um pai, para pais.</p>
+      <div class="projeto-tags"><span class="tag">Spring Boot</span><span class="tag">DDD</span><span class="tag">LLM</span><span class="tag">Angular</span></div>
+    </div>
+    <div class="projeto-card reveal">
+      <span class="projeto-status status-planned">Planejado</span>
+      <h3>GarimpeiMóvel</h3>
+      <p>Radar de imóveis da Caixa com alertas de oportunidade. Nunca mais perder um imóvel com 40% de desconto por não ter visto a tempo.</p>
+      <div class="projeto-tags"><span class="tag">Python</span><span class="tag">Event-driven</span><span class="tag">CI/CD</span><span class="tag">Spring Boot</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="servicos" id="servicos">
+  <div class="section-tag reveal">Consultoria PME</div>
+  <h2 class="section-title reveal">O que sua empresa <em>pode ter hoje</em></h2>
+  <p class="section-sub reveal">Sem o custo de uma consultoria grande. Com a qualidade de quem trabalha em sistemas financeiros críticos na Caixa Econômica Federal.</p>
+  <div class="servicos-grid">
+    <div class="servico-card reveal">
+      <div class="servico-num">01</div>
+      <h3>Diagnóstico de sistema legado</h3>
+      <p>Mapeamento do sistema atual, identificação de gargalos e proposta de modernização por etapas — sem reescrever tudo de uma vez, sem parar a operação.</p>
+    </div>
+    <div class="servico-card reveal">
+      <div class="servico-num">02</div>
+      <h3>Introdução de IA no negócio</h3>
+      <p>Automação de processos repetitivos, atendimento inteligente, análise de dados — usando IA adaptada para a realidade e o orçamento da sua empresa.</p>
+    </div>
+    <div class="servico-card reveal">
+      <div class="servico-num">03</div>
+      <h3>Desenvolvimento de MVPs</h3>
+      <p>Do problema ao produto funcional em semanas, não meses. Validação rápida de ideias com stack moderna e arquitetura que escala.</p>
+    </div>
+    <div class="servico-card reveal">
+      <div class="servico-num">04</div>
+      <h3>Integração de sistemas</h3>
+      <p>APIs, integrações entre sistemas existentes, migração de dados. Conectamos o que você tem hoje com o que você precisa amanhã.</p>
+    </div>
+  </div>
+  <div style="margin-top:56px" class="reveal">
+    <div class="section-tag" style="margin-bottom:20px">Stack técnica</div>
+    <div class="stack-grid">
+      <span class="stack-item highlight">Java 21</span><span class="stack-item highlight">Spring Boot</span>
+      <span class="stack-item highlight">Quarkus</span><span class="stack-item highlight">Angular</span>
+      <span class="stack-item">React</span><span class="stack-item">Python</span>
+      <span class="stack-item">PostgreSQL</span><span class="stack-item">SQL Server</span>
+      <span class="stack-item">Docker</span><span class="stack-item">AWS</span>
+      <span class="stack-item">Azure DevOps</span><span class="stack-item">Anthropic API</span>
+      <span class="stack-item">LangChain</span><span class="stack-item">PHP / Laravel</span>
+      <span class="stack-item">Delphi (legado)</span>
+    </div>
+  </div>
+</section>
+
+<section class="sobre" id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-content reveal">
+      <div class="section-tag">Sobre a SSAIT</div>
+      <h2 class="section-title">Por que <em>Salvador?</em></h2>
+      <p class="sobre-highlight">"IA substitui tarefas, não contexto. Quanto mais você domina o que a IA não consegue fazer sozinha, mais indispensável você se torna."</p>
+      <p>O Brasil tem milhões de pequenas empresas rodando sistemas dos anos 90, processos manuais e planilhas como banco de dados. Em Salvador, essa lacuna é ainda mais acentuada.</p>
+      <p style="margin-top:12px">A SSAIT nasce para fechar essa lacuna — com tecnologia de ponta, identidade local e projetos que provam que impacto social e excelência técnica andam juntos.</p>
+      <div style="margin-top:32px"><a href="#contato" class="btn-primary">Fale com a gente</a></div>
+    </div>
+    <div class="sobre-metrics reveal">
+      <div class="metric-card"><div class="metric-num">14<span>+</span></div><div class="metric-label">anos em desenvolvimento de sistemas</div></div>
+      <div class="metric-card"><div class="metric-num">20<span>→</span>80<span>%</span></div><div class="metric-label">cobertura de testes em sistema financeiro crítico</div></div>
+      <div class="metric-card"><div class="metric-num">5</div><div class="metric-label">projetos de impacto social em desenvolvimento</div></div>
+      <div class="metric-card"><div class="metric-num">SSA</div><div class="metric-label">Salvador, Bahia — com orgulho</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contato">
+  <div class="reveal">
+    <div class="section-tag" style="color:rgba(255,255,255,0.4)">Vamos conversar</div>
+    <h2>Tem um sistema legado<br>ou uma ideia de impacto real?</h2>
+    <p>A SSAIT está em fase de formação — mas já está construindo e já pode conversar.</p>
+    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a href="mailto:peacevan@hotmail.com" class="btn-primary">peacevan@hotmail.com</a>
+      <a href="https://www.linkedin.com/in/ivan-amado-developer" target="_blank" class="btn-outline">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <div class="logo-mark">SS</div>
+        <span class="logo-text">SS<span>AIT</span></span>
+      </a>
+      <p>Salvador Social AI Tech — tecnologia com propósito. Impacto social com IA e modernização de sistemas para pequenas empresas em Salvador, BA.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Projetos</h4>
+      <a href="#">SmartList</a>
+      <a href="#">HelpTea</a>
+      <a href="#">GarimpeiMóvel</a>
+      <a href="https://github.com/peacevan/jornada-dev" target="_blank">GitHub</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <a href="mailto:peacevan@hotmail.com">peacevan@hotmail.com</a>
+      <a href="https://www.linkedin.com/in/ivan-amado-developer" target="_blank">LinkedIn</a>
+      <a href="http://ssait.com.br">ssait.com.br</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 SSAIT — Salvador Social AI Tech</span>
+    <span>Salvador, Bahia, Brasil</span>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
